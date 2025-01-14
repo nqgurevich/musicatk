@@ -17,9 +17,9 @@ navbar:
     - text: "Vignettes"
       menu:
       - text: "Analysis in the R console"
-        href: articles/articles/tutorial_tcga_cnsl.html
+        href: articles/tutorial_tcga_cnsl.html
       - text: "Analysis with the user interface"
-        href: articles/articles/tutorial_tcga_ui.html
+        href: articles/tutorial_tcga_ui.html
     - text: "Reference"
       href: reference/index.html
     - text: "News"
