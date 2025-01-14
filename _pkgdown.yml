@@ -13,7 +13,7 @@ navbar:
       href: https://www.camplab.net/musicatk
       aria-label: Home
     - text: "Installation"
-      href: articles/articles/installation.html
+      href: articles/installation.html
     - text: "Vignettes"
       menu:
       - text: "Analysis in the R console"
