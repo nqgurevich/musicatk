@@ -7,26 +7,35 @@ specific annotation}
 \usage{
 auto_predict_grid(
   musica,
-  table_name,
+  modality,
   signature_res,
   algorithm,
+  model_id = NULL,
+  result_name = "result",
   sample_annotation = NULL,
   min_exists = 0.05,
   proportion_samples = 0.25,
   rare_exposure = 0.4,
   verbose = TRUE,
-  combine_res = TRUE
+  combine_res = TRUE,
+  make_copy = FALSE,
+  table_name = NULL
 )
 }
 \arguments{
-\item{musica}{Input samples to predit signature weights}
+\item{musica}{Input samples to predict signature weights}
 
-\item{table_name}{Name of table used for posterior prediction (e.g. SBS96)}
+\item{modality}{Modality used for posterior prediction (e.g. SBS96)}
 
 \item{signature_res}{Signatures to automatically subset from for prediction}
 
 \item{algorithm}{Algorithm to use for prediction. Choose from
-"lda_posterior", decompTumor2Sig, and deconstructSigs}
+"lda_posterior", and decompTumor2Sig}
+
+\item{model_id}{Name of model}
+
+\item{result_name}{Name for result_list entry to save the results to. Default
+\code{"result"}.}
 
 \item{sample_annotation}{Annotation to grid across, if none given,
 prediction subsetting on all samples together}
@@ -44,11 +53,17 @@ least one sample has more than this threshold proportion}
 \item{combine_res}{Automatically combines a list of annotation results
 into a single result object with zero exposure values for signatures not
 found in a given annotation's set of samples}
+
+\item{make_copy}{If \code{FALSE}, the inputted \code{\linkS4class{musica}}
+object is updated and nothing is returned. If \code{TRUE}, a new
+\code{\linkS4class{musica}} object is created and returned. Default
+\code{FALSE}.}
+
+\item{table_name}{Use modality instead}
 }
 \value{
-A list of results, one per unique annotation value, if no
-annotation value is given, returns a single result for all samples, or
-combines into a single result if combines_res = TRUE
+Returns nothing or a new \code{\linkS4class{musica}} object,
+depending on the \code{make_copy} parameter.
 }
 \description{
 Automatic filtering of signatures for exposure prediction gridded across
@@ -57,8 +72,10 @@ specific annotation
 \examples{
 data(musica_annot)
 data(cosmic_v2_sigs)
-auto_predict_grid(musica = musica_annot, table_name = "SBS96",
-signature_res = cosmic_v2_sigs, algorithm = "lda",
-sample_annotation = "Tumor_Subtypes")
+auto_predict_grid(
+  musica = musica_annot, modality = "SBS96",
+  signature_res = cosmic_v2_sigs, algorithm = "lda",
+  sample_annotation = "Tumor_Subtypes"
+)
 auto_predict_grid(musica_annot, "SBS96", cosmic_v2_sigs, "lda")
 }

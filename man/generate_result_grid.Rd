@@ -6,21 +6,24 @@
 \usage{
 generate_result_grid(
   musica,
-  table_name,
+  modality,
   algorithm = "lda",
   annotation = NA,
   k_start,
   k_end,
+  result_name = "result_grid",
   n_start = 1,
   seed = NULL,
   par_cores = FALSE,
-  verbose = FALSE
+  verbose = FALSE,
+  make_copy = FALSE,
+  table_name = NULL
 )
 }
 \arguments{
 \item{musica}{A \code{\linkS4class{musica}} object.}
 
-\item{table_name}{Name of table used for signature discovery}
+\item{modality}{Modality used for signature discovery}
 
 \item{algorithm}{Algorithm for signature discovery}
 
@@ -30,6 +33,9 @@ generate_result_grid(
 
 \item{k_end}{Upper range of number of signatures for discovery}
 
+\item{result_name}{Name for result_list entry to save the results to. Default
+\code{"result_grid"}.}
+
 \item{n_start}{Number of times to discover signatures and compare based on
 posterior loglikihood}
 
@@ -38,15 +44,25 @@ posterior loglikihood}
 \item{par_cores}{Number of parallel cores to use (NMF only)}
 
 \item{verbose}{Whether to output loop iterations}
+
+\item{make_copy}{If \code{FALSE}, the inputted \code{\linkS4class{musica}}
+object is updated and nothing is returned. If \code{TRUE}, a new
+\code{\linkS4class{musica}} object is created and returned. Default
+\code{FALSE}.}
+
+\item{table_name}{Use modality instead}
 }
 \value{
-A result object containing signatures and sample weights
+Returns nothing or a new \code{\linkS4class{musica}} object,
+depending on the \code{make_copy} parameter.
 }
 \description{
 Generate result_grid from musica based on annotation and range of k
 }
 \examples{
 data(musica_sbs96)
-grid <- generate_result_grid(musica_sbs96, "SBS96", "lda", k_start = 2, 
-k_end = 5)
+grid <- generate_result_grid(musica_sbs96, "SBS96", "lda",
+  k_start = 2,
+  k_end = 5
+)
 }

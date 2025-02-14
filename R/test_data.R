@@ -7,7 +7,7 @@
 #' @usage data(musica)
 #'
 #' @format An object of class \code{musica}
-#' See [create_musica()].
+#' See [create_musica_from_variants()] and [create_musica_from_counts()].
 #'
 #' @keywords datasets
 #'
@@ -15,7 +15,7 @@
 
 #' musica_annot
 #'
-#' A musica created for testing that includes SBS variants and sample 
+#' A musica created for testing that includes SBS variants and sample
 #' annotations
 #'
 #' @docType data
@@ -23,7 +23,7 @@
 #' @usage data(musica_annot)
 #'
 #' @format An object of class \code{musica}
-#' See [create_musica()].
+#' See [create_musica_from_variants()] and [create_musica_from_counts()].
 #'
 #' @keywords datasets
 #'
@@ -31,7 +31,7 @@
 
 #' musica_sbs96
 #'
-#' A musica created for testing that includes SBS variants and a build counts 
+#' A musica created for testing that includes SBS variants and a build counts
 #' table for them
 #'
 #' @docType data
@@ -47,7 +47,7 @@
 
 #' musica_sbs96_tiny
 #'
-#' A very small musica created for testing that includes SBS variants and a 
+#' A very small musica created for testing that includes SBS variants and a
 #' build counts table for them
 #'
 #' @docType data
@@ -70,7 +70,7 @@
 #' @usage data(dbs_musica)
 #'
 #' @format An object of class \code{musica}
-#' See [create_musica()].
+#' See [create_musica_from_variants()] and [create_musica_from_counts()].
 #'
 #' @keywords datasets
 #'
@@ -85,7 +85,7 @@
 #' @usage data(indel_musica)
 #'
 #' @format An object of class \code{musica}
-#' See [create_musica()].
+#' See [create_musica_from_variants()] and [create_musica_from_counts()].
 #'
 #' @keywords datasets
 #'
@@ -93,14 +93,14 @@
 
 #' res
 #'
-#' A musica result created for testing that includes SBS variants with 
-#' discovered exposures and signatures
+#' A musica created for testing that includes SBS variants with discovered
+#' exposures and signatures
 #'
 #' @docType data
 #'
 #' @usage data(res)
 #'
-#' @format An object of class \code{musica_result}
+#' @format An object of class \code{musica}
 #' See [discover_signatures()].
 #'
 #' @keywords datasets
@@ -109,14 +109,14 @@
 
 #' res_annot
 #'
-#' A musica result created for testing that includes SBS variants with 
-#' annotations and discovered exposures and signatures
+#' A musica created for testing that includes SBS variants with annotations and
+#' discovered exposures and signatures
 #'
 #' @docType data
 #'
 #' @usage data(res_annot)
 #'
-#' @format An object of class \code{musica_result}
+#' @format An object of class \code{musica}
 #' See [discover_signatures()].
 #'
 #' @keywords datasets
