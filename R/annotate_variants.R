@@ -43,37 +43,43 @@ add_flank_to_variants <- function(musica, g, flank_start, flank_end,
   mut_type <- paste(dat$ref, ">", dat$alt, sep = "")
   chr <- dat$chr
 
-  if (sign(flank_start) == 1) {
-    center <- dat$end
-  } else {
-    center <- dat$start
-  }
-  ref <- dat$ref
-  type <- mut_type
+  final_mut_context <- rep(NA, length(mut_type))
 
-  # Mutation Context
-  flank <- VariantAnnotation::getSeq(g, chr, center + flank_start,
-    center + flank_end,
-    as.character = TRUE
-  )
-  final_mut_context <- rep(NA, length(ref))
-
-  # Get mutation context info for those on "+" strand
+  # Pyrimidine reference: the variant is already on the reported strand, so
+  # read the window on the + strand as is
   forward_change <- c("C>A", "C>G", "C>T", "T>A", "T>C", "T>G")
-  ind <- type %in% forward_change
+  ind <- mut_type %in% forward_change
+  if (any(ind)) {
+    if (sign(flank_start) == 1) {
+      center <- dat$end[ind]
+    } else {
+      center <- dat$start[ind]
+    }
+    final_mut_context[ind] <- VariantAnnotation::getSeq(g, chr[ind],
+      center + flank_start, center + flank_end,
+      as.character = TRUE
+    )
+  }
 
-  final_mut_context[ind] <- flank[ind]
-
-  # Get mutation context info for those on "-" strand
+  # Purine reference: the variant is reported on the - strand, whose 5' side
+  # is the + strand's 3' side. Read the mirrored window on the + strand, then
+  # reverse complement it so only 6 mutation categories instead of 12
   rev_change <- c("A>G", "A>T", "A>C", "G>T", "G>C", "G>A")
-  ind <- type %in% rev_change
-
-  # Reverse complement the context so only 6 mutation categories instead of 12
-  rev_flank <- flank[ind] %>%
-    Biostrings::DNAStringSet() %>%
-    Biostrings::reverseComplement()
-
-  final_mut_context[ind] <- as.character(rev_flank)
+  ind <- mut_type %in% rev_change
+  if (any(ind)) {
+    if (sign(flank_start) == 1) {
+      center <- dat$start[ind]
+    } else {
+      center <- dat$end[ind]
+    }
+    rev_flank <- VariantAnnotation::getSeq(g, chr[ind],
+      center - flank_end, center - flank_start,
+      as.character = TRUE
+    )
+    final_mut_context[ind] <- as.character(Biostrings::reverseComplement(
+      Biostrings::DNAStringSet(rev_flank)
+    ))
+  }
   dat[[output_column]] <- final_mut_context
   eval.parent(substitute(variants(musica) <- dat))
   if (build_table) {

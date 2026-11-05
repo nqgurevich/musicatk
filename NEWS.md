@@ -9,6 +9,7 @@
 * `add_result()` matches exposure columns to the samples by name and puts them in sample order; unknown or missing sample names give an error.
 * `combine_predict_grid()` returns exposures in sample order and sets `num_signatures` and `model_id`; it stops when the models share samples (#144).
 * `create_benchmark()` stores true exposures as signatures x samples and matches them to the count table by sample name; either orientation is accepted (#194).
+* `add_flank_to_variants()` read the wrong side of the variant for SBS with a purine (A or G) reference: it reverse-complemented the + strand window at the requested offsets, giving the pyrimidine strand's 3' flank where its 5' flank was asked for, and vice versa. It now reads the mirrored window before reverse-complementing. The `lflank_*`/`rflank_*` annotations and count tables it builds change for those variants (about half of all SBS); standard SBS96 and SBS192 tables are unaffected.
 
 # musicatk 2.2.1 (2025-07-15)
 * Removed conclust dependency
